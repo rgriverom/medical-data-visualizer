@@ -43,11 +43,7 @@ def draw_heat_map():
     weight_25 = df['weight'].quantile(0.025) <= df['weight']
     weight_97 = df['weight'] <= df['weight'].quantile(0.975)
 
-    df_heat = df[(df['ap_lo'] <= df['ap_hi']) &
-                 (df['height'] >= df['height'].quantile(0.025)) &
-                 (df['height'] <= df['height'].quantile(0.975)) &
-                 (df['weight'] >= df['weight'].quantile(0.025)) &
-                 (df['weight'] <= df['weight'].quantile(0.975))]
+    df_heat = df[dist & height_25 & height_97 & weight_25 & weight_97]
 
     # Calculate the correlation matrix
     corr = df_heat.corr(method="pearson")
@@ -60,8 +56,7 @@ def draw_heat_map():
     fig, ax = plt.subplots(figsize=(12, 12))
 
     # Draw the heatmap with 'sns.heatmap()'
-    ax = sns.heatmap(corr, mask=mask, linewidths=1, square=True, annot=True, center=0.00,
-                     fmt=".1f", cbar_kws={"shrink": .5})
+    ax = sns.heatmap(corr, mask=mask, linewidths=1, square=True, annot=True, center=0.00, fmt=".1f", cbar_kws={"shrink": .5})
 
     # Do not modify the next two lines
     fig.savefig('heatmap.png')
