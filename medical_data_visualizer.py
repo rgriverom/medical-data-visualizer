@@ -53,10 +53,10 @@ def draw_heat_map():
     mask[np.triu_indices_from(mask)] = True
 
     # Set up the matplotlib figure
-    fig, ax = plt.subplots(figsize=(12, 12))
+    fig, ax = plt.subplots(figsize=(10, 10))
 
     # Draw the heatmap with 'sns.heatmap()'
-    ax = sns.heatmap(corr, mask=mask, linewidths=1, square=True, annot=True, center=0.00, fmt=".1f", cbar_kws={"shrink": .5})
+    ax = sns.heatmap(corr, mask=mask, linewidths=1, square=True, annot=True, center=0, fmt=".1f", cbar_kws={"shrink": .5})
 
     # Do not modify the next two lines
     fig.savefig('heatmap.png')
